@@ -50,34 +50,42 @@ def tag_wrap(text, tag, attributes={}):
     return result
 
 def get_heading(release_count, release_base):
-    return tag_wrap("", "th") + \
-           "".join([tag_wrap("1." + str(release_number + release_base), "th") \
+    return tag_wrap("", "th", {"style": "width:100px; padding:1px; color: black;"}) + \
+           "".join([tag_wrap("1." + str(release_number + release_base), "th", {"style": "width:40px; padding:1px; color: black;"}) \
                    for release_number in range(0, release_count)])
 
 def get_cell(status):
     if status == "DS":
-        return tag_wrap("Dev", "td", {"class":"development"})
+        return tag_wrap("Dev", "td", {"class":"development", \
+                                      "style" : "background: #33FF33; padding:1px; color: black;"})
     if status == "D":
-        return tag_wrap("", "td", {"class":"development"})
+        return tag_wrap("", "td", {"class":"development", \
+                                   "style" : "background: #33FF33; padding:1px; color: black;"})
     if status == "SS":
-        return tag_wrap("Beta", "td", {"class":"stabilization"})
+        return tag_wrap("Beta", "td", {"class":"stabilization", \
+                                       "style" : "background: #FFFF00; padding:1px; color: black;"})
     if status == "S":
-        return tag_wrap("", "td", {"class":"stabilization"})
+        return tag_wrap("", "td", {"class":"stabilization", \
+                                   "style" : "background: #FFFF00; padding:1px; color: black;"})
     if status == "R":
-        return tag_wrap("Release", "td", {"class":"release"})
-    return tag_wrap("", "td")
+        return tag_wrap("Ship", "td", {"class":"release", \
+                                          "style" : "background: #FF3333; padding:1px; color: black;"})
+    return tag_wrap("", "td", {"style": "width:40px; padding:1px; color: black;"})
 
 def get_row(tuesday, releases):
-    return tag_wrap(str(tuesday), "td") + "".join([get_cell(release.milestone(tuesday)) for release in releases])
+    return tag_wrap(str(tuesday), "td", {"style": "width:100px; padding:1px; color: black;"}) + "".join([get_cell(release.milestone(tuesday)) for release in releases])
 
 theading = tag_wrap(get_heading(len(releases), release_base), "tr")
-thead = tag_wrap(theading, "thead", {"class" : "fixedHeader"})
+table_heading = tag_wrap(theading, "table", {"class" : "fixedHeader horizontal-stripes", \
+                                             "style" : "display: block;  table-layout:fixed; width: 590px;"})
 
 rows = [tag_wrap(get_row(tuesday, releases), "tr") for tuesday in tuesdays]
-tbody = tag_wrap("".join(rows), "tbody", {"class" : "scrollContent"})
+table_rows = tag_wrap("".join(rows), "table", {"class" : "scrollContent horizontal-stripes", \
+                                               "style" : "display: block;  table-layout:fixed; width:606px; height: 450px; overflow: auto;"})
 
-table = tag_wrap(thead + tbody, "table", {"border": "0", "class" : "scrollTable"})
-table_container = tag_wrap(table, "div", {"class" : "tableContainer"})
+
+table_container = tag_wrap(table_heading + table_rows, "div", {"class" : "tableContainer", \
+                                                               "style" : "clear: both; border: 1px solid #963; height: 485px; width: 615px;"})
 
 css = open("jpc-min.css", "r").read()
 head = tag_wrap(tag_wrap(css, "style"), "head")
