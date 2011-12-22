@@ -65,11 +65,10 @@ class Release(object):
         if date < self.development_start:
             return None, None
         firefox_releases_supported = [x for x in get_release_set(date) if x <= self.max_firefox_version]
-        print str(firefox_releases_supported)
         if date == self.development_start:
-            return "DS", firefox_releases_supported
+            return "DS", get_release_set(date)
         if date < self.stabilization_start:
-            return "D", firefox_releases_supported
+            return "D", get_release_set(date)
         if date == self.stabilization_start:
             return "SS", firefox_releases_supported
         if date < self.release:
