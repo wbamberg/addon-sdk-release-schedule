@@ -5,13 +5,12 @@ import datetime
 #####################
 
 # this is the date development _starts_ for the release identified by release_base
-first_tuesday = datetime.date(2011, 10, 18)
+first_tuesday = datetime.date(2012,11,06)
+# that is, 1.13
+release_base = 13
 
-# that is, 1.4
-release_base = 4
-
-# corresponding Firefox release
-firefox_release_base = 7
+# corresponding Firefox release at the time release_base ships
+firefox_release_base = 16
 
 # number of Firefox releases that we test against
 firefox_release_spread = 4
@@ -19,8 +18,8 @@ firefox_release_spread = 4
 # number of Firefox releases to include
 firefox_release_count = 15
 
-# first firefox release date in the schedule
-firefox_release_start_date = datetime.date(2011, 9, 27)
+# release date for firefox_release_base
+firefox_release_start_date = datetime.date(2012, 10, 16)
 
 # number of releases to include
 release_count = 11
